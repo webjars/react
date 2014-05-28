@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
     <groupId>org.webjars</groupId>
     <artifactId>react</artifactId>
-    <version>0.10.1-SNAPSHOT</version>
+    <version>0.10.0-1-SNAPSHOT</version>
     <name>React</name>
     <description>WebJar for React</description>
     <url>http://webjars.org</url>
