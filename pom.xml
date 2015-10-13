@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
     <groupId>org.webjars</groupId>
     <artifactId>react</artifactId>
-    <version>0.13.4-SNAPSHOT</version>
+    <version>0.14.0-SNAPSHOT</version>
     <name>React</name>
     <description>WebJar for React</description>
     <url>http://webjars.org</url>
@@ -42,7 +42,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <source.url>https://github.com/facebook/react/archive</source.url>
-        <upstream.version>0.13.3</upstream.version>
+        <upstream.version>0.14.0</upstream.version>
         <upstream.url>http://facebook.github.io/react/downloads</upstream.url>
         <destDir>${project.build.outputDirectory}/META-INF/resources/webjars/${project.artifactId}/${upstream.version}</destDir>
         <extractDir>${project.build.directory}/react-${upstream.version}</extractDir>
@@ -50,13 +50,12 @@
             {
                 "paths": {
                     "react": "react",
-                    "react-with-addons": "react-with-addons",
-                    "JSXTransformer": "JSXTransformer"
+                    "react-dom": "react-dom",
+                    "react-with-addons": "react-with-addons"
                 },
                 "shim": {
                     "react": { "exports": "React" },
-                    "react-with-addons": { "exports": "React" },
-                    "JSXTransformer": { "exports": "transform" }
+                    "react-with-addons": { "exports": "React" }
                 }
             }
         </requirejs>
@@ -64,36 +63,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>wagon-maven-plugin</artifactId>
-                <version>1.0-beta-4</version>
-                <executions>
-                    <execution>
-                        <id>download-binary</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>download-single</goal>
-                        </goals>
-                        <configuration>
-                            <url>${upstream.url}</url>
-                            <fromFile>react-${upstream.version}.zip</fromFile>
-                            <toFile>${project.build.directory}/${project.artifactId}.zip</toFile>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>download-source</id>
-                        <phase>process-resources</phase>
-                        <goals><goal>download-single</goal></goals>
-                        <configuration>
-                            <url>${source.url}</url>
-                            <fromFile>v${upstream.version}.zip</fromFile>
-                            <toFile>${project.build.directory}/react-src.zip</toFile>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>1.7</version>
@@ -103,28 +72,14 @@
                         <goals><goal>run</goal></goals>
                         <configuration>
                             <target>
-                                <echo message="unzip binary archive" />
+                                <echo message="download archive"/>
+                                <get src="${upstream.url}/react-${upstream.version}.zip" dest="${project.build.directory}/${project.artifactId}.zip"/>
+                                <echo message="unzip archive" />
                                 <unzip src="${project.build.directory}/${project.artifactId}.zip" dest="${project.build.directory}" />
                                 <echo message="moving resources" />
                                 <move todir="${destDir}">
-                                    <fileset dir="${project.build.directory}/react-${upstream.version}/build" />
+                                    <fileset dir="${project.build.directory}/react-${upstream.version}/build"/>
                                 </move>
-                                <echo message="unzip src archive" />
-                                <unzip src="${project.build.directory}/react-src.zip" dest="${project.build.directory}" />
-                                <echo message="moving resources" />
-                                <move todir="${destDir}/src">
-                                    <fileset dir="${extractDir}/src">
-                                        <exclude name="**/__tests__/**" />
-                                    </fileset>
-                                </move>
-                                <move todir="${destDir}/vendor">
-                                    <fileset dir="${extractDir}/vendor" />
-                                </move>
-                                <move todir="${destDir}/bin">
-                                    <fileset dir="${extractDir}/bin" />
-                                </move>
-                                <move file="${extractDir}/package.json" todir="${destDir}" />
-                                <move file="${extractDir}/main.js" todir="${destDir}" />
                             </target>
                         </configuration>
                     </execution>
