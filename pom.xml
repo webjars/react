@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
     <groupId>org.webjars</groupId>
     <artifactId>react</artifactId>
-    <version>15.2.2-SNAPSHOT</version>
+    <version>15.3.1-SNAPSHOT</version>
     <name>React</name>
     <description>WebJar for React</description>
     <url>http://webjars.org</url>
@@ -42,7 +42,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <source.url>https://github.com/facebook/react/archive</source.url>
-        <upstream.version>15.2.1</upstream.version>
+        <upstream.version>15.3.1</upstream.version>
         <upstream.url>http://facebook.github.io/react/downloads</upstream.url>
         <destDir>${project.build.outputDirectory}/META-INF/resources/webjars/${project.artifactId}/${upstream.version}</destDir>
         <extractDir>${project.build.directory}/react-${upstream.version}</extractDir>
