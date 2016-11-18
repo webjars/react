@@ -42,10 +42,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <source.url>https://github.com/facebook/react/archive</source.url>
-        <upstream.version>15.3.1</upstream.version>
         <upstream.url>http://facebook.github.io/react/downloads</upstream.url>
-        <destDir>${project.build.outputDirectory}/META-INF/resources/webjars/${project.artifactId}/${upstream.version}</destDir>
-        <extractDir>${project.build.directory}/react-${upstream.version}</extractDir>
+        <destDir>${project.build.outputDirectory}/META-INF/resources/webjars/${project.artifactId}/${project.version}</destDir>
+        <extractDir>${project.build.directory}/react-${version.unsnapshot}</extractDir>
         <requirejs>
             {
                 "paths": {
@@ -64,6 +63,20 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>com.jamesward</groupId>
+                <artifactId>unsnapshot-maven-plugin</artifactId>
+                <version>0.2</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>unsnapshot</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>1.7</version>
                 <executions>
@@ -73,12 +86,12 @@
                         <configuration>
                             <target>
                                 <echo message="download archive" />
-                                <get src="${upstream.url}/react-${upstream.version}.zip" dest="${project.build.directory}/${project.artifactId}.zip" />
+                                <get src="${upstream.url}/react-${version.unsnapshot}.zip" dest="${project.build.directory}/${project.artifactId}.zip" />
                                 <echo message="unzip archive" />
                                 <unzip src="${project.build.directory}/${project.artifactId}.zip" dest="${project.build.directory}" />
                                 <echo message="moving resources" />
                                 <move todir="${destDir}">
-                                    <fileset dir="${project.build.directory}/react-${upstream.version}/build" />
+                                    <fileset dir="${project.build.directory}/react-${version.unsnapshot}/build" />
                                 </move>
                             </target>
                         </configuration>
