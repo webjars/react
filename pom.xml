@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
     <groupId>org.webjars</groupId>
     <artifactId>react</artifactId>
-    <version>15.6.1-SNAPSHOT</version>
+    <version>15.6.1</version>
     <name>React</name>
     <description>WebJar for React</description>
     <url>http://webjars.org</url>
@@ -36,7 +36,7 @@
         <url>http://github.com/webjars/react</url>
         <connection>scm:git:https://github.com/webjars/react.git</connection>
         <developerConnection>scm:git:https://github.com/webjars/react.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>react-15.6.1</tag>
     </scm>
 
     <properties>
@@ -83,12 +83,12 @@
                         <goals><goal>run</goal></goals>
                         <configuration>
                             <target>
-                                <echo message="download archive"/>
-                                <mkdir dir="${destDir}"/>
-                                <get src="${upstream.url}/react-with-addons.js" dest="${destDir}"/>
-                                <get src="${upstream.url}/react-with-addons.min.js" dest="${destDir}"/>
-                                <get src="${upstream.url}/react.js" dest="${destDir}"/>
-                                <get src="${upstream.url}/react.min.js" dest="${destDir}"/>
+                                <echo message="download archive" />
+                                <mkdir dir="${destDir}" />
+                                <get src="${upstream.url}/react-with-addons.js" dest="${destDir}" />
+                                <get src="${upstream.url}/react-with-addons.min.js" dest="${destDir}" />
+                                <get src="${upstream.url}/react.js" dest="${destDir}" />
+                                <get src="${upstream.url}/react.min.js" dest="${destDir}" />
                             </target>
                         </configuration>
                     </execution>
