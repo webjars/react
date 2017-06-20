@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
     <groupId>org.webjars</groupId>
     <artifactId>react</artifactId>
-    <version>15.3.3-SNAPSHOT</version>
+    <version>15.6.1-SNAPSHOT</version>
     <name>React</name>
     <description>WebJar for React</description>
     <url>http://webjars.org</url>
@@ -41,15 +41,13 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <source.url>https://github.com/facebook/react/archive</source.url>
-        <upstream.url>http://facebook.github.io/react/downloads</upstream.url>
+        <upstream.url>https://unpkg.com/react@${version.unsnapshot}/dist</upstream.url>
         <destDir>${project.build.outputDirectory}/META-INF/resources/webjars/${project.artifactId}/${project.version}</destDir>
         <extractDir>${project.build.directory}/react-${version.unsnapshot}</extractDir>
         <requirejs>
             {
                 "paths": {
                     "react": "react",
-                    "react-dom": "react-dom",
                     "react-with-addons": "react-with-addons"
                 },
                 "shim": {
@@ -78,21 +76,19 @@
 
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.7</version>
+                <version>1.8</version>
                 <executions>
                     <execution>
                         <phase>process-resources</phase>
                         <goals><goal>run</goal></goals>
                         <configuration>
                             <target>
-                                <echo message="download archive" />
-                                <get src="${upstream.url}/react-${version.unsnapshot}.zip" dest="${project.build.directory}/${project.artifactId}.zip" />
-                                <echo message="unzip archive" />
-                                <unzip src="${project.build.directory}/${project.artifactId}.zip" dest="${project.build.directory}" />
-                                <echo message="moving resources" />
-                                <move todir="${destDir}">
-                                    <fileset dir="${project.build.directory}/react-${version.unsnapshot}/build" />
-                                </move>
+                                <echo message="download archive"/>
+                                <mkdir dir="${destDir}"/>
+                                <get src="${upstream.url}/react-with-addons.js" dest="${destDir}"/>
+                                <get src="${upstream.url}/react-with-addons.min.js" dest="${destDir}"/>
+                                <get src="${upstream.url}/react.js" dest="${destDir}"/>
+                                <get src="${upstream.url}/react.min.js" dest="${destDir}"/>
                             </target>
                         </configuration>
                     </execution>
