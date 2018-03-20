@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
     <groupId>org.webjars</groupId>
     <artifactId>react</artifactId>
-    <version>15.6.2-SNAPSHOT</version>
+    <version>16.2.0-SNAPSHOT</version>
     <name>React</name>
     <description>WebJar for React</description>
     <url>http://webjars.org</url>
@@ -41,18 +41,18 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <upstream.url>https://unpkg.com/react@${version.unsnapshot}/dist</upstream.url>
+        <upstream.url>https://unpkg.com/react@${version.unsnapshot}</upstream.url>
         <destDir>${project.build.outputDirectory}/META-INF/resources/webjars/${project.artifactId}/${project.version}</destDir>
         <extractDir>${project.build.directory}/react-${version.unsnapshot}</extractDir>
         <requirejs>
             {
                 "paths": {
-                    "react": "react",
-                    "react-with-addons": "react-with-addons"
+                    "react-umd-development": "umd/react.development",
+                    "react-umd-production": "umd/react.production.min"
                 },
                 "shim": {
-                    "react": { "exports": "React" },
-                    "react-with-addons": { "exports": "React" }
+                    "react-umd-development": { "exports": "React" },
+                    "react-umd-production": { "exports": "React" }
                 }
             }
         </requirejs>
@@ -85,10 +85,12 @@
                             <target>
                                 <echo message="download archive" />
                                 <mkdir dir="${destDir}" />
-                                <get src="${upstream.url}/react-with-addons.js" dest="${destDir}" />
-                                <get src="${upstream.url}/react-with-addons.min.js" dest="${destDir}" />
-                                <get src="${upstream.url}/react.js" dest="${destDir}" />
-                                <get src="${upstream.url}/react.min.js" dest="${destDir}" />
+                                <mkdir dir="${destDir}/cjs" />
+                                <mkdir dir="${destDir}/umd" />
+                                <get src="${upstream.url}/umd/react.development.js" dest="${destDir}/umd" />
+                                <get src="${upstream.url}/umd/react.production.min.js" dest="${destDir}/umd" />
+                                <get src="${upstream.url}/cjs/react.development.js" dest="${destDir}/cjs" />
+                                <get src="${upstream.url}/cjs/react.production.min.js" dest="${destDir}/cjs" />
                             </target>
                         </configuration>
                     </execution>
